@@ -48,16 +48,41 @@
                 if (status == 'OK') {
                     directionsRenderer.setDirections(result);
 
-                    // Extract and display the drive time
-                    const route = result.routes[0].legs[0];
-                    const driveTime = route.duration.text;
+                    // Extract and display the round trip drive time
+                    const legs = result.routes[0].legs;
+                    let totalDuration = 0;
+                    legs.forEach(leg => {
+                        totalDuration += leg.duration.value;  // Duration in seconds
+                    });
+                    const driveTime = Math.round(totalDuration / 60);  // Convert to minutes
+
                     const infoDiv = document.getElementById('info');
                     infoDiv.innerHTML = `
                         <strong>Route Information:</strong><br>
                         Facility: HRM (Otter Lake)<br>
                         Drop-off Site: Amherst<br>
-                        Drive Time: ${driveTime}
+                        Round Trip Drive Time: ${driveTime} minutes
                     `;
+
+                    // Add custom markers with labels
+                    new google.maps.Marker({
+                        position: amherst,
+                        map: map,
+                        label: {
+                            text: "Amherst",
+                            color: "white",
+                            fontWeight: "bold"
+                        }
+                    });
+                    new google.maps.Marker({
+                        position: hrm,
+                        map: map,
+                        label: {
+                            text: "HRM (Otter Lake)",
+                            color: "white",
+                            fontWeight: "bold"
+                        }
+                    });
                 }
             });
         }
