@@ -18,6 +18,7 @@
             margin: 10px;
             padding: 10px;
             font-size: 16px;
+            color: black;  /* Set font color to black */
         }
     </style>
 </head>
@@ -27,7 +28,7 @@
     <script>
         function initMap() {
             const directionsService = new google.maps.DirectionsService();
-            const directionsRenderer = new google.maps.DirectionsRenderer();
+            const directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true });  // Suppress default markers
             const amherst = { lat: 45.813951, lng: -64.218969 };
             const hrm = { lat: 44.620725, lng: -63.733623 };
             
@@ -54,14 +55,14 @@
                     legs.forEach(leg => {
                         totalDuration += leg.duration.value;  // Duration in seconds
                     });
-                    const driveTime = Math.round(totalDuration / 60);  // Convert to minutes
+                    const driveTime = (totalDuration / 3600).toFixed(2);  // Convert to hours in decimal format
 
                     const infoDiv = document.getElementById('info');
                     infoDiv.innerHTML = `
                         <strong>Route Information:</strong><br>
                         Facility: HRM (Otter Lake)<br>
                         Drop-off Site: Amherst<br>
-                        Round Trip Drive Time: ${driveTime} minutes
+                        Round Trip Drive Time: ${driveTime} hours
                     `;
                 } else {
                     console.error('Directions request failed due to ' + status);
@@ -71,4 +72,3 @@
     </script>
 </body>
 </html>
-
