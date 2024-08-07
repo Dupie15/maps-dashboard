@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Round Trip Route</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5viWDCFW65RU0hjIozIGQ0ccH2cSGMZ4&callback=initMap&libraries=&v=weekly" async defer></script>
+    <style>
+        /* Set the size of the map */
+        #map {
+            height: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            const amherst = { lat: 45.813951, lng: -64.218969 };
+            const hrm = { lat: 44.620725, lng: -63.733623 };
+            
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: amherst,
+            });
+            directionsRenderer.setMap(map);
+
+            const request = {
+                origin: amherst,
+                destination: amherst,
+                waypoints: [{ location: hrm, stopover: true }],
+                travelMode: 'DRIVING'
+            };
+
+            directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                    directionsRenderer.setDirections(result);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
