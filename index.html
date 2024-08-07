@@ -45,7 +45,7 @@
             };
 
             directionsService.route(request, function(result, status) {
-                if (status == 'OK') {
+                if (status === 'OK') {
                     directionsRenderer.setDirections(result);
 
                     // Extract and display the round trip drive time
@@ -63,29 +63,12 @@
                         Drop-off Site: Amherst<br>
                         Round Trip Drive Time: ${driveTime} minutes
                     `;
-
-                    // Add custom markers with labels
-                    new google.maps.Marker({
-                        position: amherst,
-                        map: map,
-                        label: {
-                            text: "Amherst",
-                            color: "white",
-                            fontWeight: "bold"
-                        }
-                    });
-                    new google.maps.Marker({
-                        position: hrm,
-                        map: map,
-                        label: {
-                            text: "HRM (Otter Lake)",
-                            color: "white",
-                            fontWeight: "bold"
-                        }
-                    });
+                } else {
+                    console.error('Directions request failed due to ' + status);
                 }
             });
         }
     </script>
 </body>
 </html>
+
