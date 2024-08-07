@@ -6,8 +6,8 @@
     <style>
         /* Set the size of the map */
         #map {
-            height: 400px; /* Specify a height here */
-            width: 100%; /* And a width if needed */
+            height: 400px;  /* or 100% */
+            width: 100%;
         }
         html, body {
             height: 100%;
@@ -41,8 +41,6 @@
             directionsService.route(request, function(result, status) {
                 if (status == 'OK') {
                     directionsRenderer.setDirections(result);
-                } else {
-                    console.log('Directions request failed due to ' + status);
                 }
             });
         }
